@@ -10,7 +10,7 @@ currency-trader
 │   └── main.go          # Entry point of the application
 ├── internal
 │   ├── bot
-│   │   └── bot.go      # Trading bot implementation
+│   │   └── bot.go       # Trading bot implementation
 │   ├── exchange
 │   │   └── exchange.go  # Exchange interaction logic
 │   ├── strategy
@@ -26,7 +26,7 @@ currency-trader
 
 1. **Clone the repository:**
    ```
-   git clone <repository-url>
+   git clone https://github.com/CundyTech/currency-trader
    cd currency-trader
    ```
 
