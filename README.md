@@ -12,7 +12,7 @@ currency-trader
 │   ├── bot
 │   │   └── bot.go       # Trading bot implementation
 │   ├── exchange
-│   │   └── exchange.go  # Exchange interaction logic
+│   │   └── exchange.go  # Exchange interaction logic (TODO)
 │   ├── strategy
 │   │   └── strategy.go  # Trading strategies definitions
 │   └── utils
