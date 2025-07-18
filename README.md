@@ -1,6 +1,6 @@
 # Currency Trading Bot
 
-This project is a currency trading bot that automates trading strategies on various exchanges. It is designed to be modular and extensible, allowing for easy integration of new trading strategies and exchange APIs. The bot supports multi-currency forex pair trading, daily candle aggregation, and advanced strategies such as the 50/200 SMA crossover.
+This project is a currency trading bot that automates trading strategies on various exchanges. It is designed to be modular and extensible, allowing for easy integration of new trading strategies and exchange APIs. The bot currently supports multi-currency forex pair trading with strategies 50/200 SMA crossover and standard SMA.
 
 ## Project Structure
 
