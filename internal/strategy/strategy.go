@@ -72,7 +72,6 @@ type SMACrossover struct {
 	ShortPrices []float64
 	LongPrices  []float64
 	LastSignal  string // "buy", "sell", or "do nothing"
-
 }
 
 // AddPrice adds a new price to the Short and Long SMA lists.
