@@ -35,10 +35,30 @@ currency-trader
    go mod tidy
    ```
 
-3. **Run the application:**
-   ```
-   go run cmd/main.go
-   ```
+3. **Build the application (cross-platform):**
+   - **For Windows:**
+     ```
+     go build -o currency-trader.exe ./cmd
+     ```
+   - **For Linux:**
+     ```
+     go build -o currency-trader ./cmd
+     ```
+   - **For macOS:**
+     ```
+     go build -o currency-trader ./cmd
+     ```
+
+4. **Run the application:**
+   - On your development machine:
+     ```
+     go run cmd/main.go
+     ```
+   - Or on any target machine:
+     ```
+     ./currency-trader      # Linux/macOS
+     currency-trader.exe    # Windows
+     ```
 
 ## Usage
 
