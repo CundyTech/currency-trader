@@ -1,6 +1,6 @@
 # Currency Trading Bot
 
-This project is a currency trading bot that automates trading strategies on various exchanges. It is designed to be modular and extensible, allowing for easy integration of new trading strategies and exchange APIs.
+This project is a currency trading bot that automates trading strategies on various exchanges. It is designed to be modular and extensible, allowing for easy integration of new trading strategies and exchange APIs. The bot currently supports multi-currency forex pair trading with strategies 50/200 SMA crossover and standard SMA.
 
 ## Project Structure
 
@@ -12,15 +12,22 @@ currency-trader
 │   ├── bot
 │   │   └── bot.go       # Trading bot implementation
 │   ├── exchange
-│   │   └── exchange.go  # Exchange interaction logic (TODO)
+│   │   └── exchange.go  # Exchange interaction logic (IBKR HTTP API)
 │   ├── strategy
-│   │   └── strategy.go  # Trading strategies definitions
+│   │   └── strategy.go  # Trading strategies (SMA, SMA Crossover)
 │   └── utils
 │       └── utils.go     # Utility functions
 ├── go.mod               # Module definition
 ├── go.sum               # Dependency checksums
 └── README.md            # Project documentation
 ```
+
+## Features
+
+- Multi-currency forex pair trading (e.g., GBP/USD, EUR/USD)
+- Simple Moving Average (SMA) and 50/200 SMA crossover strategies
+- Integration with Interactive Brokers Web API for real-time forex rates
+- CI/CD with SonarQube/SonarCloud code quality and coverage
 
 ## Setup Instructions
 
@@ -42,14 +49,25 @@ currency-trader
 
 ## Usage
 
-- The bot can be configured to use different trading strategies by implementing the `Strategy` interface in the `internal/strategy/strategy.go` file.
-- To start trading, call the `Start()` method on the `Bot` struct defined in `internal/bot/bot.go`.
+- Configure the bot to trade specific forex pairs by editing `cmd/main.go`.
+- The bot supports both Simple Moving Average and SMA Crossover strategies. You can select or implement strategies in `internal/strategy/strategy.go`.
+- To fetch real-time forex rates, configure your Interactive Brokers Web API credentials and session cookie in `internal/exchange/exchange.go`.
+- The bot is scheduled to fetch rates and make trading decisions once per day at 10pm GMT.
 
 ## Examples
 
-- Implement a new trading strategy by creating a new struct that satisfies the `Strategy` interface.
-- Use the `Exchange` struct in `internal/exchange/exchange.go` to interact with your preferred trading exchange.
+- **Implement a new trading strategy:** Create a struct that satisfies the `Strategy` interface in `internal/strategy/strategy.go`.
+- **Fetch GBP/USD rate from IBKR:** Use `GetForexRate(baseURL, sessionCookie, "GBP/USD")` in `internal/exchange/exchange.go`.
+
+## CI/CD and Quality Gates
+
+- The project uses GitHub Actions and SonarQube/SonarCloud for code quality and coverage.
+- Quality gate thresholds (e.g., minimum code coverage) are enforced via SonarQube/SonarCloud settings.
 
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any enhancements or bug fixes.
+
+## License
+
+This project is licensed under the MIT License. You are free to use, modify, and distribute this software for any purpose. See the [LICENSE](LICENSE) file for details.
