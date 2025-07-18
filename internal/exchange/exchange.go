@@ -37,11 +37,12 @@ func getConidForPair(pair string) string {
 
 // GetForexRate fetches the forex rate for a currency pair using IBKR Web API and cookie authentication
 func GetForexRate(baseURL, sessionCookie, pair string) (*ForexRate, error) {
-	rate := []ForexRate{}
+
 	conid := getConidForPair(pair)
 	if conid == "" {
 		return nil, fmt.Errorf("unsupported pair: %s", pair)
 	}
+
 	client := &http.Client{}
 	url := fmt.Sprintf("%s/v1/api/iserver/marketdata/snapshot?conids=%s&fields=31", baseURL, conid)
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
@@ -49,6 +50,7 @@ func GetForexRate(baseURL, sessionCookie, pair string) (*ForexRate, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	req.Header.Set("Cookie", sessionCookie)
 	resp, err := client.Do(req)
 	if err != nil {
@@ -62,6 +64,8 @@ func GetForexRate(baseURL, sessionCookie, pair string) (*ForexRate, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	rate := []ForexRate{}
 	if err := json.Unmarshal(body, &rate); err != nil {
 		return nil, err
 	}
