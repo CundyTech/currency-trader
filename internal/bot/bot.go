@@ -20,9 +20,10 @@ type Bot struct {
 	wallet          w.Wallet
 	pairs           []string
 	candleCloseTime time.Time // The time of day when the strategy should execute
+	sessionCookie   string    // Session cookie for IBKR Web API authentication
 }
 
-func NewBot(pairs []string, shortPeriod int, longPeriod int, candleCloseTime time.Time) *Bot {
+func NewBot(pairs []string, shortPeriod int, longPeriod int, candleCloseTime time.Time, sessionCookie string) *Bot {
 	strategies := make(map[string]*strategy.SMACrossover)
 	for _, pair := range pairs {
 		strategies[pair] = &strategy.SMACrossover{ShortPeriod: shortPeriod}
@@ -33,6 +34,7 @@ func NewBot(pairs []string, shortPeriod int, longPeriod int, candleCloseTime tim
 		strategies:      strategies,
 		wallet:          w.Wallet{Transactions: []w.Transaction{}, Balance: 10.0},
 		candleCloseTime: candleCloseTime,
+		sessionCookie:   sessionCookie,
 	}
 }
 
@@ -41,9 +43,9 @@ func (b *Bot) Start() {
 	b.isTrading = true
 	for b.isTrading {
 		duration := waitUntil(b.candleCloseTime)
-		fmt.Printf("Sleeping for %v until next candle close time", duration)
+		fmt.Printf("Sleeping for %v until next candle close time", duration.Truncate(2*time.Second))
 		time.Sleep(duration)
-		data, err := exchange.GetForexRate("https://localhost:5000", "x-sess-uuid=0.981e1202.1752786317.178fe338", b.pairs[0])
+		data, err := exchange.GetForexRate("https://localhost:5000", b.sessionCookie, b.pairs[0])
 		if err != nil {
 			fmt.Println("Error fetching forex rate:", err)
 			return
